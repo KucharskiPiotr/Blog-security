@@ -1,0 +1,27 @@
+<div class="container">
+    <h4>Zabezpieczone wyszukiwanie</h4>
+    <%= form_with url: '/search_safe', method: :get, local: true, class: "row g-3" do |form| %>
+        <div class="col-auto">
+            <%= form.label :title, "Podaj tytuł", class: "visually-hidden" %>
+        </div>
+        <div class="col-auto">
+            <%= form.text_field :title, class: "form-control", placeholder: "Podaj tytuł" %>
+        </div>
+        <div class="col-auto">
+            <%= submit_tag "Szukaj", class: "btn btn-primary" %>
+        </div>
+    <% end %>
+
+    <hr />
+    
+    <% if @query.present? %>
+        <h3>
+            Wyniki wyszukiwania dla:
+            <%= @query %>
+        </h3>
+    <% end %>
+    
+    <% if @articles.present? %>
+        <%= render template: 'application/index' %>
+    <% end %>
+</div>

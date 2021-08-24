@@ -7,30 +7,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to 'Dodaj wpis', 'articles/new', class:"nav-link active" %>
+          <%= link_to 'Dodaj wpis', new_article_path, class:"nav-link active" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Niezabezpieczone wyszukiwanie', search_path, class:"nav-link active" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Zabezpieczone wyszukiwanie', search_safe_path, class:"nav-link active" %>
         </li>
       </ul>
-      <form class="d-flex">
-        <div class="container">
-          <div class="container text-warning">
-            <h4>Unsafe search:</h4>
-            <%= form_with url: '/search', method: :get, local: true do |form| %>
-            <%= form.label :title, "Search title" %>
-            <%= form.text_field :title %>
-            <%= submit_tag "Search" %>
-            <% end %>
-          </div>
-
-          <div class="container text-warning">
-            <h4>Safe search:</h4>
-            <%= form_with url: '/search_safe', method: :get, local: true do |form| %>
-            <%= form.label :title, "Search title" %>
-            <%= form.text_field :title %>
-            <%= submit_tag "Search" %>
-            <% end %>
-          </div>
-        </div>
-      </form>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-self-end">
         <li class="nav-item dropdown align-self-end">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
