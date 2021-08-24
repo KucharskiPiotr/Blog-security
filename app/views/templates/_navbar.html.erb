@@ -11,8 +11,25 @@
         </li>
       </ul>
       <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <div class="container">
+          <div class="container text-warning">
+            <h4>Unsafe search:</h4>
+            <%= form_with url: '/search', method: :get, local: true do |form| %>
+            <%= form.label :title, "Search title" %>
+            <%= form.text_field :title %>
+            <%= submit_tag "Search" %>
+            <% end %>
+          </div>
+
+          <div class="container text-warning">
+            <h4>Safe search:</h4>
+            <%= form_with url: '/search_safe', method: :get, local: true do |form| %>
+            <%= form.label :title, "Search title" %>
+            <%= form.text_field :title %>
+            <%= submit_tag "Search" %>
+            <% end %>
+          </div>
+        </div>
       </form>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-self-end">
         <li class="nav-item dropdown align-self-end">
