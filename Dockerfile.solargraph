@@ -1,0 +1,15 @@
+FROM ruby:3.0.0
+ENV APP_ROOT /code
+RUN apt-get update -qq && apt-get install -y build-essential libsqlite3-dev default-libmysqlclient-dev libpq-dev
+
+WORKDIR APP_ROOT
+COPY Gemfile Gemfile.lock ./
+RUN gem install bundler
+RUN bundle install 
+RUN gem install solargraph yard
+
+RUN yard gems
+RUN solargraph bundle 
+EXPOSE 7658
+
+CMD ["solargraph", "socket", "--host=0.0.0.0", "--port=7658"]
