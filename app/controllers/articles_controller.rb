@@ -1,6 +1,9 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: %i[ show edit update destroy ]
+  include ActionView::Helpers::SanitizeHelper
 
+  before_action :set_article, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  
   # GET /articles or /articles.json
   def index
     @articles = Article.all
@@ -21,7 +24,7 @@ class ArticlesController < ApplicationController
 
   # POST /articles or /articles.json
   def create
-    @article = Article.new(article_params)
+    @article = Article.new(filtered_params)
 
     respond_to do |format|
       if @article.save
@@ -37,7 +40,7 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1 or /articles/1.json
   def update
     respond_to do |format|
-      if @article.update(article_params)
+      if @article.update(filtered_params)
         format.html { redirect_to @article, notice: "Article was successfully updated." }
         format.json { render :show, status: :ok, location: @article }
       else
@@ -65,5 +68,28 @@ class ArticlesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def article_params
       params.require(:article).permit(:title, :content, :user_id)
+    end
+    
+    def filtered_params
+      article_params.merge({ 
+        user_id: current_user.id, 
+        title: sanitize_title,
+        content: sanitize_content 
+      })
+    end
+
+    def sanitize_content
+      sanitize article_params[:content], scrubber: image_scrubber
+    end
+    
+    def sanitize_title
+      sanitize article_params[:title]
+    end
+    
+    def image_scrubber
+      @scrubber ||= Loofah::Scrubber.new do |node|
+        node.remove if node.name == 'script'
+        node.remove if node.name == 'img' && !node["src"].starts_with?("https://www.pk.edu.pl/")
+      end
     end
 end

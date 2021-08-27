@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
         @articles = ActiveRecord::Base.connection.execute("SELECT title FROM articles WHERE title LIKE '%#{params[:title]}%'")
         @query = params[:title]
     end
-    
+
     render action: :search
   end
 

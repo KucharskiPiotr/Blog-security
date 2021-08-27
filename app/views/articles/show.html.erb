@@ -6,7 +6,7 @@
 </p>
 
 <p>
-  <strong>Content:</strong>
+  <strong>Secure Content:</strong>
   <%= @article.content %>
 </p>
 
@@ -18,6 +18,11 @@
 <p>
   <strong>Insecure HTML Safe Content:</strong>
   <%= @article.content.html_safe %>
+</p>
+
+<p>
+  <strong>Sanitized</strong>
+  <%= sanitize @article.content %>
 </p>
 
 <p>
