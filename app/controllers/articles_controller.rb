@@ -88,7 +88,7 @@ class ArticlesController < ApplicationController
     
     def image_scrubber
       @scrubber ||= Loofah::Scrubber.new do |node|
-        node.remove if node.name == 'script'
+        node.remove if ['script', 'a'].include? node.name 
         node.remove if node.name == 'img' && !node["src"].starts_with?("https://www.pk.edu.pl/")
       end
     end
