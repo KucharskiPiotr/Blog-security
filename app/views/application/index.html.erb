@@ -1,8 +1,14 @@
-<ul class="list-group list-group-flush">
+<div class="container">
+    <div class="row h5">
+        <div class="col-10">Tytuł wpisu</div>
+        <div class="col">Autor</div>
+    </div>
+    <hr />
     <% @articles.each do |article| %> 
-        <% puts "Inside index template", article %>
-        <li class="list-group-item">
-            <%= link_to article["title"], "articles/#{article[:id]}" %>
-        </li>
+        <div class="row">
+            <%= link_to article["title"], "articles/#{article[:id]}", class: "col-10" %>
+            <div class="col"><%= article.user["username"] %></div>
+        </div>
+        <hr />
     <% end %>
-</ul>
+</div>

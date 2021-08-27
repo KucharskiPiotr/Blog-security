@@ -2,11 +2,11 @@ class ArticlesController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
 
   before_action :set_article, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
   
   # GET /articles or /articles.json
   def index
-    @articles = Article.all
+    @articles = current_user.articles
   end
 
   # GET /articles/1 or /articles/1.json

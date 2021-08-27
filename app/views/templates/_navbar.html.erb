@@ -16,18 +16,23 @@
           <%= link_to 'Zabezpieczone wyszukiwanie', search_safe_path, class:"nav-link active" %>
         </li>
       </ul>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-self-end">
-        <li class="nav-item dropdown align-self-end">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
+      <ul class="navbar-nav mb-2 mb-lg-0 align-self-end">
+        <% if current_user.present? %>
+          <li class="nav-item dropdown align-self-end">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Witaj, <%= current_user.username %>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><%= link_to 'Moje artykuły', articles_path, class: 'dropdown-item' %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= button_to 'Wyloguj', destroy_user_session_path, class: "dropdown-item", method: :delete %></li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="nav-tem">
+            <%= link_to 'Zaloguj', new_user_session_path, class: "nav-link active" %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
