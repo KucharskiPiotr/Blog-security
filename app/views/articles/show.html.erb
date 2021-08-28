@@ -1,36 +1,36 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
+  <strong>Tytuł:</strong>
   <%= @article.title %>
 </p>
 
 <p>
-  <strong>Secure Content:</strong>
+  <strong>Treść artykułu (bezpieczna, tekst):</strong>
   <%= @article.content %>
 </p>
 
 <p>
-  <strong>Insecure Raw Content:</strong>
+  <strong>Treść artykułu (niebezpieczna):</strong>
   <%= raw @article.content %>
 </p>
 
 <p>
-  <strong>Insecure HTML Safe Content:</strong>
+  <strong>Treść artykułu (zastosowanie html_safe):</strong>
   <%= @article.content.html_safe %>
 </p>
 
 <p>
-  <strong>Sanitized</strong>
+  <strong>Treść artykułu (oczyszczona, bezpieczna):</strong>
   <%= sanitize @article.content %>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @article.user_id %>
+  <strong>Autor wpisu:</strong>
+  <%= @article.user.username %>
 </p>
 
 <% if can? :edit, @article %>
-  <%= link_to 'Edit', edit_article_path(@article) %> |
+  <%= link_to 'Edytuj', edit_article_path(@article) %> |
 <% end %>
-<%= link_to 'Back', root_path %>
+<%= link_to 'Cofnij', root_path %>
