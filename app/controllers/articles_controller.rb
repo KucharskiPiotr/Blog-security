@@ -16,14 +16,17 @@ class ArticlesController < ApplicationController
   # GET /articles/new
   def new
     @article = Article.new
+    authorize! :new, @article
   end
 
   # GET /articles/1/edit
   def edit
+    authorize! :edit, @article
   end
 
   # POST /articles or /articles.json
   def create
+    authorize! :create, @article
     @article = Article.new(filtered_params)
 
     respond_to do |format|
@@ -39,6 +42,7 @@ class ArticlesController < ApplicationController
 
   # PATCH/PUT /articles/1 or /articles/1.json
   def update
+    authorize! :update, @article
     respond_to do |format|
       if @article.update(filtered_params)
         format.html { redirect_to @article, notice: "Article was successfully updated." }
@@ -52,6 +56,7 @@ class ArticlesController < ApplicationController
 
   # DELETE /articles/1 or /articles/1.json
   def destroy
+    authorize! :destroy, @article
     @article.destroy
     respond_to do |format|
       format.html { redirect_to articles_url, notice: "Article was successfully destroyed." }
@@ -72,7 +77,7 @@ class ArticlesController < ApplicationController
     
     def filtered_params
       article_params.merge({ 
-        user_id: current_user.id, 
+        user_id: @article.user.blank? ? current_user.id : @article.user.id, 
         title: sanitize_title,
         content: sanitize_content 
       })

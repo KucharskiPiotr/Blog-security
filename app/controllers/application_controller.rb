@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include ActionView::Helpers::SanitizeHelper
-
   def index
     @articles = Article.all
   end
