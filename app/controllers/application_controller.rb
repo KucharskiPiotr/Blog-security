@@ -1,13 +1,18 @@
 class ApplicationController < ActionController::Base
-    def index
-        @articles = Article.all
-    end
+  include ActionView::Helpers::SanitizeHelper
+
+  def index
+    @articles = Article.all
+  end
 
   def search
     if params[:title].present?
-        # To exploit that query run eg. "' UNION SELECT login as title, password as body FROM USERS where '1%'='1"
-        @articles = ActiveRecord::Base.connection.execute("SELECT title FROM articles WHERE title LIKE '%#{params[:title]}%'")
-        @query = params[:title]
+      @articles = ActiveRecord::Base.connection.execute(
+        "SELECT articles.id as id, title, username " + 
+        "FROM articles JOIN users ON articles.user_id = users.id " + 
+        "WHERE title LIKE '%#{params[:title]}%'"
+      )
+      @query = params[:title]
     end
 
     render action: :search
@@ -15,8 +20,8 @@ class ApplicationController < ActionController::Base
 
   def safe_search
     if params[:title].present?
-        @articles = Article.where('title LIKE ?', "%#{params[:title]}%")
-        @query = params[:title]
+      @articles = Article.where('title LIKE ?', "%#{params[:title]}%")
+      @query = sanitize params[:title]
     end
 
     render action: :search_safe

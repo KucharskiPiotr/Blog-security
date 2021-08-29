@@ -6,8 +6,14 @@
     <hr />
     <% @articles.each do |article| %> 
         <div class="row">
-            <%= link_to article["title"], "articles/#{article[:id]}", class: "col-10" %>
-            <div class="col"><%= article.user["username"] %></div>
+            <%= link_to article["title"], "articles/#{article["id"]}", class: "col-10" %>
+            <div class="col">
+                <% if defined?(without_user) && without_user %>
+                    <%= article["username"] %>
+                <% else %>
+                    <%= article.user["username"] %>
+                <% end %>
+            </div>
         </div>
         <hr />
     <% end %>

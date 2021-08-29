@@ -22,6 +22,6 @@
     <% end %>
 
     <% if @articles.present? %> 
-        <%= render template: 'application/index' %>
+        <%= render template: 'application/index', locals: { without_user: true } %>
     <% end %>
 </div>
